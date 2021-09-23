@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Document</title>
+
+</head>
+<body>
+
+
+
+
+    <a href="/">ChatApp</a>
+    <a href="/login">User Login</a><br/>
+    <a href="/register">User Register</a><br/>
+     
+<br/> 
+     
+    <div class="row">
+       <h1>User Login</h1>
+
+       <form class="my-Form"   method="POST" >
+
+      <div class="form-group">
+        <label for="email">UserEmail</label>
+        <input type="email" class="form-control" id="email" id="email"  >
+    </div>
+        <div class="form-group">
+          <label for="pwd">Password:</label>
+          <input type="password" class="form-control" id="pwd" id="email" >
+        </div>
+
+        <input type="button" id="btn_submit" value="Submit form">
+ </form>
+    </div>
+
+    <script>
+
+      // selector element
+
+//use of jquery
+
+  $(document).on('click', '#btn_submit', function(){
+
+async function postData(url, data) {
+  const response = await fetch(url, {
+    method: 'POST', 
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data) 
+  });
+  return response.json(); 
+}
+ 
+let email = document.getElementById("email").value; 
+let password = document.getElementById("pwd").value;
+
+if(email.length <= 0 ){
+  alert("email is required");
+  return false;
+}
+
+if(password.length <= 0 ){
+  alert("password is required");
+  return false;
+}
+
+postData('http://localhost:3001/api/users/login/', {email:email,password:password})
+  .then(data => {
+    if (data.success){
+      window.location='/';
+    }
+    console.log(data); 
+    
+  });
+});
+ 
+</script>
+
+</body>
+
+
+</html>
+
